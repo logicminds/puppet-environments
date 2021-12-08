@@ -1,0 +1,4 @@
+production:
+  type: git
+  source: https://github.com/nwops/kontrol-repo.git
+  version: main
