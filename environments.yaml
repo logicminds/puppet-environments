@@ -1,4 +1,7 @@
-prod:
+production:
   type: git
   source: https://github.com/logicminds/kontrol-repo-yaml.git
   version: main
+  
+# the r10k settions must first ignore the production branch and run puppet agent to configure the settings
+# once completed you can specify production here
