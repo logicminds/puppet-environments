@@ -1,4 +1,4 @@
-new_prod:
+new_feature:
   type: git
   source: https://github.com/logicminds/kontrol-repo-yaml.git
   version: main
