@@ -14,4 +14,4 @@ if [[ $? -ne 0 ]]; then
   echo "Something happen and the script did not execute correctly"
   exit 1
 fi
-cat /etc/puppetlabs/r10k/puppet-environments/r10k-environments.yaml
+cat /etc/puppetlabs/r10k/puppet-environments/r10k-environments.yaml | sed 's|[[:blank:]]*#.*||;/./!d;'
