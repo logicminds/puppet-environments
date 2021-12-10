@@ -1,12 +1,12 @@
-production1:
+production:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
   version: main
-dev11_acceptance:
+dev1_acceptance:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
   version: acceptance
-dev11_development:
+dev1_development:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
   version: main
