@@ -12,19 +12,40 @@
 #     #type: yaml
 #     #config: '/etc/puppetlabs/r10k/environments.yaml' 
 #     command: '/etc/puppetlabs/r10k/r10k-environments.sh' 
- 
+
+# Note: The pe-puppet user will need to have the key of the git server
+# so the known hosts file must contain the entry for the git server.  Either
+# add the known_hosts file to /etc/ssh/known_hosts or run the following as the pe-puppet user
+# su - pe-puppet -s /bin/bash.  ssh git@gitserver  (accept key when prompted)
+
+
+LOG_TIME=$(date -Iseconds)
+# Change the below url to the puppet-environments repo where
+# r10k-enviornments.yaml lives
 GIT_URL="https://github.com/nwops/puppet-environments.git"
+# Git must be in the path
 GIT_COMMAND=$(which git)
+# Required directory so pe-puppet user can write to it
 BASE_SERVER_DIR="/opt/puppetlabs/server/data/puppetserver"
+# Directory where git will clone the git url to
 REPO_DIR="${BASE_SERVER_DIR}/puppet-environments"
+# Location where the log file will be created, must be writeable by pe-puppet
 LOG_FILE="${BASE_SERVER_DIR}/r10k-yaml.log"
+# Environments.yaml file
 YAML_FILE="${REPO_DIR}/r10k-environments.yaml"
+# path to where the r10k key file is 
+# not required with https git urls
+SSH_PRIVATE_KEY_FILE="/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
+# The command git will use to use ssh url
+# not required with https git urls
+GIT_SSH_COMMAND="ssh -i ${SSH_PRIVATE_KEY_FILE}"
 
 if [[ $? -ne 0 ]]; then
   echo "\nGit does not appear to be installed or in the PATH\n"
   exit 1
 fi
-touch $LOG_FILE
+# Append log with new time stamp
+echo $LOG_TIME >> $LOG_FILE
 if [[ $? -ne 0 ]]; then
   echo "Cannot write to log file destination"
   echo "Run touch $LOG_FILE"
@@ -34,9 +55,9 @@ fi
 
 if [[ -f ${YAML_FILE} ]]; then
   cd ${REPO_DIR}
-  ${GIT_COMMAND} pull --rebase 2>&1 >> ${LOG_FILE}
+  ${GIT_COMMAND} pull --ff-only --autostash >& >> ${LOG_FILE}
 else
-  ${GIT_COMMAND} clone -q $GIT_URL ${REPO_DIR} 2>&1 >> ${LOG_FILE}
+  ${GIT_COMMAND} clone -q $GIT_URL ${REPO_DIR} >& >> ${LOG_FILE}
 fi
 if [[ $? -ne 0 ]]; then
   echo "\nSomething happen and the script did not execute correctly\n"
@@ -47,7 +68,7 @@ fi
 cat ${YAML_FILE} | sed 's|[[:blank:]]*#.*||;/./!d;'
 if [[ $(id -u) -eq 0 ]]; then
   # ran as root, if we don't delete our tracks then code manager fails
-  echo "Please remove ${LOG_FILE}"
-  echo "Please remove ${REPO_DIR}"
+  echo "Please remove: rm -f ${LOG_FILE}"
+  echo "Please remove: rm -rf ${REPO_DIR}"
   echo "Code manager does not work due to permissions"
 fi
