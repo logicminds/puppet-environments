@@ -5,4 +5,4 @@
 
 # Even though we specify no cache the server may still have the content loaded.  Until the cache is busted the content
 # returned will not be changed.
-curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/logicminds/puppet-environments/main/environments.yaml
+curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/logicminds/puppet-environments/main/r10k-environments.yaml
