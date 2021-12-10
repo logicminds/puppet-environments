@@ -11,9 +11,9 @@ fi
 # /etc/puppetlabs/r10k/r10k-environments.sh
 if [[ -f /etc/puppetlabs/r10k/puppet-environments/r10k-environments.yaml ]]; then
   cd /etc/puppetlabs/r10k/puppet-environments
-  ${GIT_COMMAND} pull --rebase 2>&1 >> ${LOG_FILE}
+  ${GIT_COMMAND} pull --rebase 1>&2 >> ${LOG_FILE}
 else
-  ${GIT_COMMAND} clone -q $GIT_URL /etc/puppetlabs/r10k/puppet-environments 2>&1 >> ${LOG_FILE}
+  ${GIT_COMMAND} clone -q $GIT_URL /etc/puppetlabs/r10k/puppet-environments 1>&2 >> ${LOG_FILE}
 fi
 if [[ $? -ne 0 ]]; then
   echo "\nSomething happen and the script did not execute correctly\n"
