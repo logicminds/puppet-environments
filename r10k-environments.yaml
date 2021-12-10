@@ -2,6 +2,51 @@ production:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
   version: main
-  
+dev1_acceptance:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml.git
+  version: acceptance
+dev1_development:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml.git
+  version: main
+
+dev2_acceptance:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev2.git
+  version: main
+dev2_development:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev2.git
+  version: main
+
+dev3_acceptance:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev3.git
+  version: main
+dev3_development:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev3.git
+  version: main
+         
+dev4_acceptance:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev4.git
+  version: main
+dev4_development:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev4.git
+  version: main
+         
+dev5_acceptance:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev5.git
+  version: main
+dev5_development:
+  type: git
+  source: https://github.com/nwops/kontrol-repo-yaml-dev5.git
+  version: main
+         
+            
 # the r10k settions must first ignore the production branch and run puppet agent to configure the settings
 # once completed you can specify production here

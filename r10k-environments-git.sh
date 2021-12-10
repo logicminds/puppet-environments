@@ -31,8 +31,7 @@ if [[ $? -ne 0 ]]; then
   echo "Then chown pe-puppet:pe-puppet $LOG_FILE"
   exit 1
 fi
-# This is a sample yaml environment exec command you can use to dynamically generate a environments yaml content
-# /etc/puppetlabs/r10k/r10k-environments.sh
+
 if [[ -f ${YAML_FILE} ]]; then
   cd ${REPO_DIR}
   ${GIT_COMMAND} pull --rebase 2>&1 >> ${LOG_FILE}
