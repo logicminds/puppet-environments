@@ -1,4 +1,4 @@
-prod:
+production:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
   version: main
