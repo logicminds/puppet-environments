@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Author: NWOPS, LLC
+# Date: 12/9/2021
+# Purpose: allows code manager to setup yaml environments
+# Usage: Place this script /etc/puppetlabs/r10k/r10k-environments.sh
+# Add below to your hiera data
+# puppet_enterprise::master::code_manager::sources:
+#   puppet:
+#     remote: 'N/A'
+#     type: exec
+#     #type: yaml
+#     #config: '/etc/puppetlabs/r10k/environments.yaml' 
+#     command: '/etc/puppetlabs/r10k/r10k-environments.sh' 
+ 
 GIT_URL="https://github.com/nwops/puppet-environments.git"
 GIT_COMMAND=$(which git)
 BASE_SERVER_DIR="/opt/puppetlabs/server/data/puppetserver"
