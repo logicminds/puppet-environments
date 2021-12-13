@@ -18,6 +18,10 @@
 # add the known_hosts file to /etc/ssh/known_hosts or run the following as the pe-puppet user
 # su - pe-puppet -s /bin/bash.  ssh git@gitserver  (accept key when prompted)
 
+# Older versions of git do not support the GIT_SSH_COMMAND environment variable
+# especially on OS older than RHEL8.  As a work around you can install pdk which also ships with a 
+# new version pdk.  Note you can always install a newer version of git as well.
+export PATH=/opt/puppetlabs/pdk/private/git/bin:$PATH
 
 LOG_TIME=$(date -Iseconds)
 # Change the below url to the puppet-environments repo where
