@@ -44,7 +44,7 @@ SSH_PRIVATE_KEY_FILE="/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
 # not required with https git urls
 GIT_SSH_COMMAND="ssh -i ${SSH_PRIVATE_KEY_FILE}"
 
-if [[ $? -ne 0 ]]; then
+if [[ ! -f $GIT_COMMAND ]]; then
   echo "\nGit does not appear to be installed or in the PATH\n"
   exit 1
 fi
@@ -59,15 +59,20 @@ fi
 
 if [[ -f ${YAML_FILE} ]]; then
   cd ${REPO_DIR}
-  ${GIT_COMMAND} pull --ff-only --autostash >& >> ${LOG_FILE}
+  ${GIT_COMMAND} pull --ff-only --autostash &>> $LOG_FILE
+  if [[ $? -ne 0 ]]; then
+    echo "Command failed, using cached value" >> ${LOG_FILE}
+    echo "\nSomething happen and the script did not execute correctly\n" >> ${LOG_FILE}
+  fi
 else
-  ${GIT_COMMAND} clone -q $GIT_URL ${REPO_DIR} >& >> ${LOG_FILE}
+  ${GIT_COMMAND} clone -q $GIT_URL ${REPO_DIR} &>> $LOG_FILE
+  if [[ $? -ne 0 ]]; then
+    echo "\nSomething happen and the script did not execute correctly\n" >> ${LOG_FILE}
+    echo "Check log file ${LOG_FILE}"
+    exit 1
+  fi
 fi
-if [[ $? -ne 0 ]]; then
-  echo "\nSomething happen and the script did not execute correctly\n"
-  echo "Check log file ${LOG_FILE}"
-  exit 1
-fi
+
 
 cat ${YAML_FILE} | sed 's|[[:blank:]]*#.*||;/./!d;'
 if [[ $(id -u) -eq 0 ]]; then
