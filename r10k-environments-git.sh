@@ -42,7 +42,7 @@ YAML_FILE="${REPO_DIR}/r10k-environments.yaml"
 SSH_PRIVATE_KEY_FILE="/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
 # The command git will use to use ssh url
 # not required with https git urls
-GIT_SSH_COMMAND="ssh -i ${SSH_PRIVATE_KEY_FILE}"
+export GIT_SSH_COMMAND="ssh -i ${SSH_PRIVATE_KEY_FILE}"
 
 if [[ ! -f $GIT_COMMAND ]]; then
   echo "\nGit does not appear to be installed or in the PATH\n"
