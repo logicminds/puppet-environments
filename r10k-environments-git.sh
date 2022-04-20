@@ -13,10 +13,24 @@
 #     #config: '/etc/puppetlabs/r10k/environments.yaml' 
 #     command: '/etc/puppetlabs/r10k/r10k-environments.sh' 
 
-# Note: The pe-puppet user will need to have the key of the git server
+# Note: The following tasks must be completed before using this script
+# 1. ensure ssh host key has been added
 # so the known hosts file must contain the entry for the git server.  Either
 # add the known_hosts file to /etc/ssh/known_hosts or run the following as the pe-puppet user
 # su - pe-puppet -s /bin/bash.  ssh git@gitserver  (accept key when prompted)
+
+# 2. The pe-puppet user will need to have access to the git ssh key for the git server
+# This should have already been setup for r10k
+
+# 3. ensure the pe-puppet user has access to clone the repository
+# You can test via something similar: 
+# GIT_URL="https://github.com/nwops/puppet-environments.git"
+# SSH_PRIVATE_KEY_FILE="/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
+# export GIT_SSH_COMMAND="ssh -i ${SSH_PRIVATE_KEY_FILE}"
+# git clone $GIT_URL
+
+# 4. ensure production is not specified in multiple r10k sources, at least ignore in one place
+
 
 # Older versions of git do not support the GIT_SSH_COMMAND environment variable
 # especially on OS older than RHEL8.  As a work around you can install pdk which also ships with a 
