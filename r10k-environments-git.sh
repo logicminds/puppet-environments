@@ -9,8 +9,6 @@
 #   puppet:
 #     remote: 'N/A'
 #     type: exec
-#     #type: yaml
-#     #config: '/etc/puppetlabs/r10k/environments.yaml' 
 #     command: '/etc/puppetlabs/r10k/r10k-environments.sh' 
 
 # Note: The following tasks must be completed before using this script
