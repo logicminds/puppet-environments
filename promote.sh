@@ -5,6 +5,7 @@
 # Requirements: 
 #  - yq
 #  - git
+#  - rg (ripgrep)
 
 # Gets the tags of your control repo and updates your puppet environment with that tag then creates a commit
 
@@ -14,7 +15,7 @@ r10k_environments_file='r10k-environments.yaml'
 
 echo 
 echo "Welcome to the auto promote script, to get started please specify a version to promote: "
-echo "If you do not see your version, the tag in the control repo must be created first"
+echo "If you do not see your version, the tag in the control repo must be created first."
 echo 
 versions=$(git ls-remote $control_repo_remote | rg 'tags/(v?[0-9,.]+)' -or '$1' - )
 
