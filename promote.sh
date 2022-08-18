@@ -3,12 +3,14 @@
 # Date: 4/2/2022
 # Purpose: Auto promote tag in puppet control repo to specified environment
 # Requirements: 
-#  - yq
+#  - yq - 4.25.1+
 #  - git
 #  - rg (ripgrep)
 
+# brew install yq rg
 # Gets the tags of your control repo and updates your puppet environment with that tag then creates a commit
 
+# pick a nunber
 control_repo_remote='https://github.com/nwops/kontrol-repo-yaml.git'
 r10k_environments_file='r10k-environments.yaml'
 
@@ -25,8 +27,6 @@ do
   break
 done
 git fetch origin
-branch="promote-${version}"
-git checkout -b $branch origin/main
 
 echo "Select an environment to promote ${version} to:"
 envs=$(yq 'keys | .[]' r10k-environments.yaml)
@@ -39,7 +39,9 @@ do
  
       case $input in
             [yY][eE][sS]|[yY])
-                  yq -i ".${env}.version = \"1.1.1\"" r10k-environments.yaml 
+                  yq -i ".${env}.version = \"${version}\"" r10k-environments.yaml 
+                  branch="promote-${version}-${env}"
+                  git checkout -b $branch origin/main
                   git add r10k-environments.yaml
                   git commit -m "Promoting version ${version} to environment ${env}"
                   echo "If you are ready to push run: git push origin ${branch}"
