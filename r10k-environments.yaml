@@ -5,7 +5,7 @@ production:
 dev1_acceptance:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
-  version: acceptance
+  version: v0.1.0
 dev1_development:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml.git
