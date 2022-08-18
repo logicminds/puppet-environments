@@ -41,6 +41,6 @@ dev5_acceptance:
 dev5_development:
   type: git
   source: https://github.com/nwops/kontrol-repo-yaml-dev5.git
-  version: main
+  version: v0.1.0
 # the r10k settions must first ignore the production branch and run puppet agent to configure the settings
 # once completed you can specify production here
